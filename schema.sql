@@ -18,7 +18,5 @@ CREATE TABLE `mbank_transactions`
   DEFAULT CHARSET = utf8
   COLLATE = utf8_unicode_ci;
 
-/** Add updates here ... */
-
 ALTER TABLE `mbank_transactions`
   ADD PRIMARY KEY (`id`);
