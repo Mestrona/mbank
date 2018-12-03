@@ -14,7 +14,10 @@ use AqBanking\ContextXmlRenderer;
 use AqBanking\HbciVersion;
 use AqBanking\PinFile\PinFile;
 use AqBanking\PinFile\PinFileCreator;
+use AqBanking\Transaction;
 use AqBanking\User;
+use DateTime;
+use PDO;
 
 class Account
 {
@@ -38,20 +41,29 @@ class Account
         $this->pinFile = new PinFile($this->getStoragePath(), $this->user);
     }
 
-    public function fetch()
+    public function fetchTransactions(DateTime $from = null)
     {
         $this->initializeAqBanking();
 
         $contextFile = new ContextFile($this->getStoragePath() . '/aqBanking.ctx');
 
         $runRequest = new RequestCommand($this->account, $contextFile, $this->pinFile);
-        $runRequest->execute();
+        $runRequest->execute($from);
 
         $render = new RenderContextFileToXMLCommand();
         $dom = $render->execute($contextFile);
         $result = new ContextXmlRenderer($dom);
 
-        return $result;
+        $transactions = $result->getTransactions();
+
+        return $transactions;
+    }
+
+    public function fetchKeyedTransactions(DateTime $from = null)
+    {
+        $keyedTransactions = $this->keyTransactions($this->fetchTransactions($from));
+
+        return $keyedTransactions;
     }
 
     protected function initializeAqBanking()
@@ -68,14 +80,46 @@ class Account
 
 
         } catch (\AqBanking\Command\AddUserCommand\UserAlreadyExistsException $e) {
-            echo 'AqBanking is already initialized. If you want to reinitialize, '
-                . 'you might want to delete .aqbanking in your home directory';
+            // AqBanking is already initialized. If you want to reinitialize,
+            // you might want to delete .aqbanking in your home directory
         }
     }
 
     protected function getStoragePath()
     {
         return __DIR__ . '/../storage';
+    }
+
+
+    /**
+     * Generate a unique ID per transaction
+     * We assume, that all transactions of a day are always present in the fetched transactions
+     * (after a while, very old transactions might not appear)
+     * So we generate a continues key per day, combine it with the date and have a globally unique key
+     *
+     * @param Transaction[] $transactions
+     * @return Transaction[]
+     */
+    protected function keyTransactions(array $transactions)
+    {
+        $result = [];
+        $dateCounters = array();
+        foreach ($transactions as $transaction) {
+            $date = $transaction->getDate()->format('Ymd');
+            if ( ! isset($dateCounters[$date])) {
+                $dateCounters[$date] = 0;
+            }
+            $dateCounters[$date]++;
+            $uniqId = self::formatKey($date, $dateCounters[$date]);
+            $result[$uniqId] = $transaction;
+        }
+
+        return $result;
+    }
+
+    public static function formatKey(string $date, int $increment)
+    {
+        return $date . sprintf('%05d', $increment);
     }
 
 }

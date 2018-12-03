@@ -9,10 +9,19 @@ $defaultBank = [
     'hbciVersion' => '300',
 ];
 
+$defaultDbConnection = [
+    'pdoConnectionString' => 'mysql:host=localhost;dbname=mbank',
+    'pdoUser' => 'foo',
+    'pdoPassword' => 'bar',
+    'table' => 'mbank_transactions',
+];
+
 return [
     'default' => [
         // Assign the bank here
         'bank' => $defaultBank,
+        // Assign the database connection here
+        'database' => $defaultDbConnection,
         // Your acounts user ID
         'userId' => 'example',
         // Your account Owner (your name)
