@@ -29,8 +29,13 @@ Debugging
 
 After initializing, try manually
 
-    export BIC=  # BankCode hier angeben
-    export ACCOUNT=  # Account Nummer hier angeben
-    aqbanking-cli --acceptvalidcerts request --bank=$BIC--account=$ACOUNT --ctxfile=../storage/aqBanking.ctx --balance --transactions
-    aqbanking-cli --acceptvalidcerts getaccounts--bank=$BIC--account=$ACOUNT
-    aqbanking-cli --acceptvalidcerts listaccounts --bank=$BIC--account=$ACOUNT 
+    export BIC=  # Enter bank code here
+    export ACCOUNT=  # Enter account code here
+    aqbanking-cli --acceptvalidcerts request --bank=$BIC --account=$ACCOUNT --ctxfile=.storage/aqBanking.ctx --balance --transactions
+    aqbanking-cli --acceptvalidcerts getaccounts--bank=$BIC --account=$ACCOUNT
+    aqbanking-cli --acceptvalidcerts listaccounts --bank=$BIC --account=$ACCOUNT 
+
+License
+=======
+
+MIT
