@@ -1,0 +1,117 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "a327193a5482c3846e8316e3293ce3d1",
+    "packages": [
+        {
+            "name": "juit/aqbanking-php",
+            "version": "v0.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/janunger/aqbanking-php.git",
+                "reference": "40bd4f8802e51bf592b171df4e162e0d969dbe44"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/janunger/aqbanking-php/zipball/40bd4f8802e51bf592b171df4e162e0d969dbe44",
+                "reference": "40bd4f8802e51bf592b171df4e162e0d969dbe44",
+                "shasum": ""
+            },
+            "require": {
+                "mathiasverraes/money": "1.2.0",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "v1.2.0",
+                "mockery/mockery": "dev-master",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Unger",
+                    "email": "ju@juit.de",
+                    "homepage": "http://juit.de",
+                    "role": "developer"
+                }
+            ],
+            "description": "A wrapper to use AqBanking CLI from a PHP context",
+            "abandoned": true,
+            "time": "2018-02-04T12:33:49+00:00"
+        },
+        {
+            "name": "mathiasverraes/money",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/moneyphp/money.git",
+                "reference": "58035dfd64f588239e8af12e2e3c9da408b0ddfa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/moneyphp/money/zipball/58035dfd64f588239e8af12e2e3c9da408b0ddfa",
+                "reference": "58035dfd64f588239e8af12e2e3c9da408b0ddfa",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "3.7.*"
+            },
+            "suggest": {
+                "pink-tie/money-bundle": "For Symfony integration."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Money": "lib"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mathias Verraes",
+                    "email": "mathias@verraes.net"
+                }
+            ],
+            "description": "PHP implementation of Fowler's Money pattern",
+            "homepage": "http://verraes.net/2011/04/fowler-money-pattern-in-php/",
+            "keywords": [
+                "Generic Sub-domain",
+                "Value Object",
+                "money"
+            ],
+            "abandoned": "moneyphp/money",
+            "time": "2013-04-12T23:10:48+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
