@@ -3,8 +3,6 @@
 CREATE TABLE `mbank_transactions`
 (
   `id`                         bigint(20) UNSIGNED                  NOT NULL,
-  `created_at`                 timestamp                            NULL DEFAULT NULL,
-  `updated_at`                 timestamp                            NULL DEFAULT NULL,
   `date`                       datetime                             NOT NULL,
   `valuta_date`                datetime                             NOT NULL,
   `amount`                     decimal(8,2)                         NOT NULL,
@@ -21,3 +19,6 @@ CREATE TABLE `mbank_transactions`
   COLLATE = utf8_unicode_ci;
 
 /** Add updates here ... */
+
+ALTER TABLE `mbank_transactions`
+  ADD PRIMARY KEY (`id`);
