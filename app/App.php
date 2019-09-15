@@ -27,7 +27,8 @@ class App
 
 
         if ($newest == null) {
-            $firstDay = null;
+            $firstDay = new DateTime();
+            $firstDay->modify('-89 day');
             echo 'Fetching all available transactions from the bank' . PHP_EOL;
         } else {
             $firstDay = clone $newest;

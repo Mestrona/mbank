@@ -6,9 +6,13 @@ use AqBanking\Account as AqAccount;
 use AqBanking\Bank;
 use AqBanking\BankCode;
 use AqBanking\Command\AddUserCommand;
+use AqBanking\Command\AddUserFlagsCommand;
+use AqBanking\Command\GetAccountsCommand;
 use AqBanking\Command\GetSysIDCommand;
+use AqBanking\Command\ListUsersCommand;
 use AqBanking\Command\RenderContextFileToXMLCommand;
 use AqBanking\Command\RequestCommand;
+use AqBanking\Command\SetITanModeCommand;
 use AqBanking\ContextFile;
 use AqBanking\ContextXmlRenderer;
 use AqBanking\HbciVersion;
@@ -16,6 +20,7 @@ use AqBanking\PinFile\PinFile;
 use AqBanking\PinFile\PinFileCreator;
 use AqBanking\Transaction;
 use AqBanking\User;
+use AqBanking\UserMatcher;
 use DateTime;
 use PDO;
 
@@ -27,6 +32,7 @@ class Account
     protected $bank;
     protected $account;
     protected $user;
+    protected $existingUser;
     protected $pinFile;
 
     public function __construct($config)
@@ -68,21 +74,38 @@ class Account
 
     protected function initializeAqBanking()
     {
-        try {
+        $listUsers = new ListUsersCommand();
+        $userList = $listUsers->execute();
+        $userMatcher = new UserMatcher($userList);
+        $this->existingUser = $userMatcher->getExistingUser($this->user);
+
+        if ($this->existingUser === null) {
             $addUser = new AddUserCommand();
             $addUser->execute($this->user);
 
-            $createPinFile = new PinFileCreator($this->getStoragePath());
-            $createPinFile->createFile($this->config['pin'], $this->user);
+            $userList = $listUsers->execute();
+            $userMatcher = new UserMatcher($userList);
+            $this->existingUser = $userMatcher->getExistingUser($this->user);
 
-            $getSysId = new GetSysIDCommand();
-            $getSysId->execute($this->user, $this->pinFile);
-
-
-        } catch (\AqBanking\Command\AddUserCommand\UserAlreadyExistsException $e) {
-            // AqBanking is already initialized. If you want to reinitialize,
-            // you might want to delete .aqbanking in your home directory
+            if ($this->existingUser === null) {
+                throw new \RuntimeException('User not found, even after creating');
+            }
         }
+
+        $addUserFlags = new AddUserFlagsCommand();
+        $addUserFlags->execute($this->existingUser, AddUserFlagsCommand::FLAG_SSL_QUIRK_IGNORE_PREMATURE_CLOSE);
+
+        $createPinFile = new PinFileCreator($this->getStoragePath());
+        $createPinFile->createFile($this->config['pin'], $this->user);
+
+        $getSysId = new GetSysIDCommand();
+        $getSysId->execute($this->existingUser, $this->pinFile);
+
+        $setITanMode = new SetITanModeCommand();
+        $setITanMode->execute($this->existingUser, 6942); // FIXME: Hard Coded SMS TAN, instead choose first available?
+
+        $getAccounts = new GetAccountsCommand();
+        $getAccounts->execute($this->existingUser, $this->pinFile);
     }
 
     protected function getStoragePath()
