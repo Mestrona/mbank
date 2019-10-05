@@ -32,7 +32,7 @@ class App
             echo 'Fetching all available transactions from the bank' . PHP_EOL;
         } else {
             $firstDay = clone $newest;
-            $firstDay->modify('-10 day');
+            $firstDay->modify('-1 day');
             echo sprintf('Newest transaction %s', $newest->format('Y-m-d') ) . PHP_EOL;
             echo sprintf('Fetching from %s', $firstDay->format('Y-m-d') ) . PHP_EOL;
         }
