@@ -10,11 +10,11 @@ use AqBanking\Command\AddUserFlagsCommand;
 use AqBanking\Command\GetAccountsCommand;
 use AqBanking\Command\GetSysIDCommand;
 use AqBanking\Command\ListUsersCommand;
-use AqBanking\Command\RenderContextFileToTsvCommand;
+use AqBanking\Command\RenderContextFileToXMLCommand;
 use AqBanking\Command\RequestCommand;
 use AqBanking\Command\SetITanModeCommand;
 use AqBanking\ContextFile;
-use AqBanking\ContextTsvRenderer;
+use AqBanking\ContextXmlRenderer;
 use AqBanking\HbciVersion;
 use AqBanking\PinFile\PinFile;
 use AqBanking\PinFile\PinFileCreator;
@@ -56,9 +56,9 @@ class Account
         $runRequest = new RequestCommand($this->account, $contextFile, $this->pinFile);
         $runRequest->execute($from);
 
-        $render = new RenderContextFileToTsvCommand();
+        $render = new RenderContextFileToXMLCommand();
         $dom = $render->execute($contextFile);
-        $result = new ContextTsvRenderer($dom);
+        $result = new ContextXmlRenderer($dom);
 
         $transactions = $result->getTransactions();
 
@@ -128,7 +128,7 @@ class Account
         $result = [];
         $dateCounters = array();
         foreach ($transactions as $transaction) {
-            $date = $transaction->getValutaDate()->format('Ymd');
+            $date = $transaction->getDate()->format('Ymd');
             if ( ! isset($dateCounters[$date])) {
                 $dateCounters[$date] = 0;
             }

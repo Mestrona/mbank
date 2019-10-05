@@ -16,7 +16,7 @@ class BankTransactionTable extends Table
         foreach ($keyedTransactions as $id => $aqTransaction) {
             $row = [
                 'id' => $id,
-//                'date' => $aqTransaction->getDate()->format(Table::SQL_DATE_FORMAT),
+                'date' => $aqTransaction->getDate()->format(Table::SQL_DATE_FORMAT),
                 'valuta_date' => $aqTransaction->getValutaDate()->format(Table::SQL_DATE_FORMAT),
                 'remote_account_holder_name' => $aqTransaction->getRemoteAccount()->getAccountHolderName(),
                 'remote_account_number' => $aqTransaction->getRemoteAccount()->getAccountNumber(),
