@@ -22,7 +22,11 @@ class App
         $databaseHandle = new \PDO($dbConfig['pdoConnectionString'], $dbConfig['pdoUser'], $dbConfig['pdoPassword']);
         $databaseHandle->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
-        $table = new BankTransactionTable($databaseHandle, $dbConfig['table']);
+        $table = new BankTransactionTable($databaseHandle,
+            $dbConfig['table'],
+            $dbConfig['primaryKey'] ?? 'id',
+            $this->accounts[$configName]['hooks'] ?? []
+        );
         $newest = $table->getNewestTransactionDate();
 
 

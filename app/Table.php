@@ -10,11 +10,20 @@ class Table
      * @var \PDO
      */
     protected $databaseHandle;
+    /**
+     * @var string
+     */
+    protected $table;
+    /**
+     * @var string
+     */
+    protected $primaryKey;
 
-    public function __construct(\PDO $databaseHandle, string $table)
+    public function __construct(\PDO $databaseHandle, string $table, string $primaryKey = 'id')
     {
         $this->databaseHandle = $databaseHandle;
         $this->table = $table;
+        $this->primaryKey = $primaryKey;
     }
 
     public function insertArray($associativeArray)
@@ -34,7 +43,7 @@ class Table
 
     public function idExists($id)
     {
-        $sql = "SELECT 1 as count FROM `".$this->table."` WHERE id = ? LIMIT 1";
+        $sql = "SELECT 1 as count FROM `".$this->table."` WHERE `".$this->primaryKey."` = ? LIMIT 1";
         $statement = $this->databaseHandle->prepare($sql);
         $statement->execute([$id]);
         return $statement->fetchColumn();
