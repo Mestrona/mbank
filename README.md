@@ -3,13 +3,14 @@ mBank
 
 Simple Transaction fetcher by Mestrona GbR.
 
-Works with AqBanking to fetch bank transactions and save them to database table.
+Works with AqBanking to fetch bank transactions via HBCI and save them to database table.
 
 
 Installation
 ============
 
 1. Clone the git repository
+2. Install [AqBanking](https://aquamaniac.de/) for your operating system (Debian/Ubuntu: `apt install aqbanking-tools`)
 2. Install composer (if not yet done)
 3. run `composer install`
 4. Install the database schema from schema.sql
