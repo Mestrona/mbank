@@ -3,7 +3,7 @@
     "description": "Download Banking Transactions and Write them to a Database",
     "type": "project",
     "require": {
-        "juit/aqbanking-php": "^0.3.1"
+        "mestrona/aqbanking-php": "0.4.0"
     },
     "autoload": {
         "psr-4": {

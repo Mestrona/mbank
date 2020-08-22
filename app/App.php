@@ -22,16 +22,21 @@ class App
         $databaseHandle = new \PDO($dbConfig['pdoConnectionString'], $dbConfig['pdoUser'], $dbConfig['pdoPassword']);
         $databaseHandle->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
-        $table = new BankTransactionTable($databaseHandle, $dbConfig['table']);
+        $table = new BankTransactionTable($databaseHandle,
+            $dbConfig['table'],
+            $dbConfig['primaryKey'] ?? 'id',
+            $this->accounts[$configName]['hooks'] ?? []
+        );
         $newest = $table->getNewestTransactionDate();
 
 
         if ($newest == null) {
-            $firstDay = null;
+            $firstDay = new DateTime();
+            $firstDay->modify('-89 day');
             echo 'Fetching all available transactions from the bank' . PHP_EOL;
         } else {
             $firstDay = clone $newest;
-            $firstDay->modify('-10 day');
+            $firstDay->modify('-1 day');
             echo sprintf('Newest transaction %s', $newest->format('Y-m-d') ) . PHP_EOL;
             echo sprintf('Fetching from %s', $firstDay->format('Y-m-d') ) . PHP_EOL;
         }

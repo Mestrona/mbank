@@ -4,6 +4,18 @@ namespace Mestrona\Bank;
 
 class BankTransactionTable extends Table
 {
+    const HOOK_PROCESS_ROW = 'process_row';
+    const HOOK_AFTER_SAVED = 'after_saved';
+
+    protected $hooks;
+
+    public function __construct(\PDO $databaseHandle, string $table, string $primaryKey = 'id', $hooks = [])
+    {
+        parent::__construct($databaseHandle, $table, $primaryKey);
+        $this->hooks = $hooks;
+    }
+
+
     /**
      * @param Transaction[] $transactions
      *
@@ -11,11 +23,11 @@ class BankTransactionTable extends Table
      */
     public function insertTransactions(array $keyedTransactions)
     {
-        $saved = 0;
+        $saved = [];
 
         foreach ($keyedTransactions as $id => $aqTransaction) {
             $row = [
-                'id' => $id,
+                $this->primaryKey => $id,
                 'date' => $aqTransaction->getDate()->format(Table::SQL_DATE_FORMAT),
                 'valuta_date' => $aqTransaction->getValutaDate()->format(Table::SQL_DATE_FORMAT),
                 'remote_account_holder_name' => $aqTransaction->getRemoteAccount()->getAccountHolderName(),
@@ -29,16 +41,23 @@ class BankTransactionTable extends Table
                 'purpose' => $aqTransaction->getPurpose(),
             ];
 
-
             if ($this->idExists($id)) {
                 continue;
             }
 
+            if (isset($this->hooks[self::HOOK_PROCESS_ROW])) {
+                $row = call_user_func($this->hooks[self::HOOK_PROCESS_ROW], $row);
+            }
+
             $this->insertArray($row);
-            $saved++;
+            $saved[] = $row;
         }
 
-        return $saved;
+        if (isset($this->hooks[self::HOOK_AFTER_SAVED])) {
+            call_user_func($this->hooks[self::HOOK_AFTER_SAVED], $saved);
+        }
+
+        return count($saved);
     }
 
     public function getNewestTransactionDate()
