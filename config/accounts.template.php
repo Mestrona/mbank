@@ -41,7 +41,7 @@ return [
         // Your PIN
         'pin' => 'SuperSecret',
         // TAN mode, use "listtans" command manually to check the available modes
-        'tanMode' => 6921, // depends on
+        'tanMode' => 6921,
         // Define Hooks
         'hooks' => $hooks,
     ],
