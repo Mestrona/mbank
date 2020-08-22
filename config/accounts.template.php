@@ -40,6 +40,8 @@ return [
         'accountNumber' => '123456',
         // Your PIN
         'pin' => 'SuperSecret',
+        // TAN mode, use "listtans" command manually to check the available modes
+        'tanMode' => 6921, // depends on
         // Define Hooks
         'hooks' => $hooks,
     ],

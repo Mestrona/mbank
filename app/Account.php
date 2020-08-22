@@ -92,9 +92,6 @@ class Account
             }
         }
 
-        $addUserFlags = new AddUserFlagsCommand();
-        $addUserFlags->execute($this->existingUser, AddUserFlagsCommand::FLAG_SSL_QUIRK_IGNORE_PREMATURE_CLOSE);
-
         $createPinFile = new PinFileCreator($this->getStoragePath());
         $createPinFile->createFile($this->config['pin'], $this->user);
 
@@ -102,7 +99,7 @@ class Account
         $getSysId->execute($this->existingUser, $this->pinFile);
 
         $setITanMode = new SetITanModeCommand();
-        $setITanMode->execute($this->existingUser, 6942); // FIXME: Hard Coded SMS TAN, instead choose first available?
+        $setITanMode->execute($this->existingUser, $this->config['tanMode']);
 
         $getAccounts = new GetAccountsCommand();
         $getAccounts->execute($this->existingUser, $this->pinFile);

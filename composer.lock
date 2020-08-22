@@ -4,53 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a327193a5482c3846e8316e3293ce3d1",
+    "content-hash": "8577740734291b1c11fb0e1fa6bf1665",
     "packages": [
-        {
-            "name": "juit/aqbanking-php",
-            "version": "v0.3.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/janunger/aqbanking-php.git",
-                "reference": "40bd4f8802e51bf592b171df4e162e0d969dbe44"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/janunger/aqbanking-php/zipball/40bd4f8802e51bf592b171df4e162e0d969dbe44",
-                "reference": "40bd4f8802e51bf592b171df4e162e0d969dbe44",
-                "shasum": ""
-            },
-            "require": {
-                "mathiasverraes/money": "1.2.0",
-                "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "mikey179/vfsstream": "v1.2.0",
-                "mockery/mockery": "dev-master",
-                "phpunit/phpunit": "3.7.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jan Unger",
-                    "email": "ju@juit.de",
-                    "homepage": "http://juit.de",
-                    "role": "developer"
-                }
-            ],
-            "description": "A wrapper to use AqBanking CLI from a PHP context",
-            "abandoned": true,
-            "time": "2018-02-04T12:33:49+00:00"
-        },
         {
             "name": "mathiasverraes/money",
             "version": "1.2.0",
@@ -104,6 +59,59 @@
             ],
             "abandoned": "moneyphp/money",
             "time": "2013-04-12T23:10:48+00:00"
+        },
+        {
+            "name": "mestrona/aqbanking-php",
+            "version": "0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Mestrona/aqbanking-php.git",
+                "reference": "aa94a3cacee0ecdc9a4999c637958ef73ad2aa28"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Mestrona/aqbanking-php/zipball/aa94a3cacee0ecdc9a4999c637958ef73ad2aa28",
+                "reference": "aa94a3cacee0ecdc9a4999c637958ef73ad2aa28",
+                "shasum": ""
+            },
+            "require": {
+                "mathiasverraes/money": "1.2.0",
+                "php": ">=5.3.0"
+            },
+            "replace": {
+                "juit/aqbanking-php": "*"
+            },
+            "require-dev": {
+                "mikey179/vfsstream": "v1.2.0",
+                "mockery/mockery": "dev-master",
+                "phpunit/phpunit": "3.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Unger",
+                    "email": "ju@juit.de",
+                    "homepage": "http://juit.de",
+                    "role": "developer"
+                },
+                {
+                    "name": "Alexander Menk",
+                    "email": "menk@mestrona.net",
+                    "homepage": "http://mestrona.net",
+                    "role": "maintainer"
+                }
+            ],
+            "description": "A wrapper to use AqBanking CLI from a PHP context",
+            "time": "2020-08-22T12:02:40+00:00"
         }
     ],
     "packages-dev": [],
@@ -113,5 +121,6 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
