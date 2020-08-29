@@ -41,11 +41,11 @@ class Table
         return $statement->execute($values);
     }
 
-    public function idExists($id)
+    public function idExists($id, $configCode = 'default')
     {
-        $sql = "SELECT 1 as count FROM `".$this->table."` WHERE `".$this->primaryKey."` = ? LIMIT 1";
+        $sql = "SELECT 1 as count FROM `".$this->table."` WHERE `".$this->primaryKey."` = ? AND config_code = ? LIMIT 1";
         $statement = $this->databaseHandle->prepare($sql);
-        $statement->execute([$id]);
+        $statement->execute([$id, $configCode]);
         return $statement->fetchColumn();
     }
 }

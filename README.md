@@ -12,7 +12,7 @@ Installation
 1. Clone the git repository
 2. Install composer (if not yet done)
 3. run `composer install`
-4. Install the database schema from schema.sql
+4. Install the database schema from `schema.sql` and `schema_update_1.sql`
 
 Usage
 =====

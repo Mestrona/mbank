@@ -21,13 +21,14 @@ class BankTransactionTable extends Table
      *
      * @return int Number of saved transactions
      */
-    public function insertTransactions(array $keyedTransactions)
+    public function insertTransactions(array $keyedTransactions, $configCode = 'default')
     {
         $saved = [];
 
         foreach ($keyedTransactions as $id => $aqTransaction) {
             $row = [
                 $this->primaryKey => $id,
+                'config_code' => $configCode,
                 'date' => $aqTransaction->getDate()->format(Table::SQL_DATE_FORMAT),
                 'valuta_date' => $aqTransaction->getValutaDate()->format(Table::SQL_DATE_FORMAT),
                 'remote_account_holder_name' => $aqTransaction->getRemoteAccount()->getAccountHolderName(),
@@ -41,7 +42,7 @@ class BankTransactionTable extends Table
                 'purpose' => $aqTransaction->getPurpose(),
             ];
 
-            if ($this->idExists($id)) {
+            if ($this->idExists($id, $configCode)) {
                 continue;
             }
 
@@ -60,11 +61,11 @@ class BankTransactionTable extends Table
         return count($saved);
     }
 
-    public function getNewestTransactionDate()
+    public function getNewestTransactionDate($configCode = 'default')
     {
-        $sql = "SELECT `date` FROM `".$this->table."` ORDER BY `date` DESC LIMIT 1";
+        $sql = "SELECT `date` FROM `".$this->table."` WHERE config_code = ? ORDER BY `date` DESC LIMIT 1";
         $statement = $this->databaseHandle->prepare($sql);
-        $statement->execute();
+        $statement->execute([$configCode]);
 
         $column = $statement->fetchColumn();
 

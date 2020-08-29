@@ -15,6 +15,8 @@ class App
 
     public function run()
     {
+        global $argv;
+
         $configName = $argv[1] ?? 'default';
 
         $dbConfig = $this->accounts[$configName]['database'];
@@ -27,7 +29,7 @@ class App
             $dbConfig['primaryKey'] ?? 'id',
             $this->accounts[$configName]['hooks'] ?? []
         );
-        $newest = $table->getNewestTransactionDate();
+        $newest = $table->getNewestTransactionDate($configName);
 
 
         if ($newest == null) {
@@ -51,7 +53,7 @@ class App
 
         echo 'Saving ...' . PHP_EOL;
 
-        $countNew = $table->insertTransactions($transactions);
+        $countNew = $table->insertTransactions($transactions, $configName);
 
         echo sprintf('Saved %d NEW transactions', $countNew) . PHP_EOL;
     }
