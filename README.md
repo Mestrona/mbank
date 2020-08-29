@@ -21,7 +21,9 @@ Usage
    (database info + account data)
    
 2. Call `php mbank default` to fetch the recent transactions for the default
-account. You can configure as many accounts as you like
+account. You can configure as many accounts as you like.
+Call `php mbank --all` to fetch recent transaction for all configured accounts.
+
 
 3. If the tan mode is wrong, you can find out the valid ones by calling `aqhbci-tool4 listitanmodes --user=1`
 

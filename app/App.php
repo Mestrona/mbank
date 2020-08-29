@@ -17,9 +17,25 @@ class App
     {
         global $argv;
 
-        $configName = $argv[1] ?? 'default';
+        $configParam = $argv[1] ?? 'default';
 
-        $dbConfig = $this->accounts[$configName]['database'];
+        if ($configParam == '--all') {
+            foreach(array_keys($this->accounts) as $configCode)  {
+                $this->fetchWithConfig($configCode);
+            }
+        } else {
+            $this->fetchWithConfig($configParam);
+        }
+    }
+
+    /**
+     * Fetch transactions for a specific config name
+     *
+     * @param string $configCode
+     */
+    private function fetchWithConfig(string $configCode)
+    {
+        $dbConfig = $this->accounts[$configCode]['database'];
 
         $databaseHandle = new \PDO($dbConfig['pdoConnectionString'], $dbConfig['pdoUser'], $dbConfig['pdoPassword']);
         $databaseHandle->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
@@ -27,10 +43,11 @@ class App
         $table = new BankTransactionTable($databaseHandle,
             $dbConfig['table'],
             $dbConfig['primaryKey'] ?? 'id',
-            $this->accounts[$configName]['hooks'] ?? []
+            $this->accounts[$configCode]['hooks'] ?? []
         );
-        $newest = $table->getNewestTransactionDate($configName);
+        $newest = $table->getNewestTransactionDate($configCode);
 
+        echo 'Config code = ' . $configCode . PHP_EOL;
 
         if ($newest == null) {
             $firstDay = new DateTime();
@@ -43,7 +60,7 @@ class App
             echo sprintf('Fetching from %s', $firstDay->format('Y-m-d') ) . PHP_EOL;
         }
 
-        $account = new Account($this->accounts[$configName]);
+        $account = new Account($this->accounts[$configCode]);
 
         echo 'Fetching ...' . PHP_EOL;
 
@@ -53,7 +70,7 @@ class App
 
         echo 'Saving ...' . PHP_EOL;
 
-        $countNew = $table->insertTransactions($transactions, $configName);
+        $countNew = $table->insertTransactions($transactions, $configCode);
 
         echo sprintf('Saved %d NEW transactions', $countNew) . PHP_EOL;
     }
