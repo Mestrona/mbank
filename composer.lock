@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8577740734291b1c11fb0e1fa6bf1665",
+    "content-hash": "94752b83bb266b3c1c03e13c7536d133",
     "packages": [
         {
             "name": "mathiasverraes/money",
@@ -62,16 +62,16 @@
         },
         {
             "name": "mestrona/aqbanking-php",
-            "version": "0.4.0",
+            "version": "0.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Mestrona/aqbanking-php.git",
-                "reference": "aa94a3cacee0ecdc9a4999c637958ef73ad2aa28"
+                "reference": "969c78912431d1b15754de79594a8ad03be1a20b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Mestrona/aqbanking-php/zipball/aa94a3cacee0ecdc9a4999c637958ef73ad2aa28",
-                "reference": "aa94a3cacee0ecdc9a4999c637958ef73ad2aa28",
+                "url": "https://api.github.com/repos/Mestrona/aqbanking-php/zipball/969c78912431d1b15754de79594a8ad03be1a20b",
+                "reference": "969c78912431d1b15754de79594a8ad03be1a20b",
                 "shasum": ""
             },
             "require": {
@@ -111,7 +111,7 @@
                 }
             ],
             "description": "A wrapper to use AqBanking CLI from a PHP context",
-            "time": "2020-08-22T12:02:40+00:00"
+            "time": "2020-09-12T08:15:01+00:00"
         }
     ],
     "packages-dev": [],
