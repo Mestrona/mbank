@@ -3,12 +3,17 @@
 namespace Mestrona\Bank;
 
 use AqBanking\Account as AqAccount;
+use AqBanking\AccountMatcher;
 use AqBanking\Bank;
 use AqBanking\BankCode;
+use AqBanking\Command\AddAccountFlagsCommand;
 use AqBanking\Command\AddUserCommand;
 use AqBanking\Command\AddUserFlagsCommand;
 use AqBanking\Command\GetAccountsCommand;
+use AqBanking\Command\GetAccSepaCommand;
 use AqBanking\Command\GetSysIDCommand;
+use AqBanking\Command\ListAccounts;
+use AqBanking\Command\ListAccountsCommand;
 use AqBanking\Command\ListUsersCommand;
 use AqBanking\Command\RenderContextFileToXMLCommand;
 use AqBanking\Command\RequestCommand;
@@ -103,6 +108,21 @@ class Account
 
         $getAccounts = new GetAccountsCommand();
         $getAccounts->execute($this->existingUser, $this->pinFile);
+
+        $listAccounts = new ListAccountsCommand();
+        $accountList = $listAccounts->execute();
+        $accountMatcher = new AccountMatcher($accountList);
+        $existingAccount = $accountMatcher->getExistingAccount($this->account);
+
+        if (is_null($existingAccount)) {
+            throw new \Exception('Account not found in AqBanking');
+        }
+
+        $addAccountFlags = new AddAccountFlagsCommand();
+        $addAccountFlags->execute($existingAccount, AddAccountFlagsCommand::FLAG_PREFER_CAMT_DOWNLOAD);
+
+        $getAccSepa = new GetAccSepaCommand();
+        $getAccSepa->execute($existingAccount, $this->pinFile);
     }
 
     protected function getStoragePath()
