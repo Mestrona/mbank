@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "082be578f4f02cb0e465cd364c97b354",
+    "content-hash": "f46ee2750707a5c000499f19b2dc8429",
     "packages": [
         {
             "name": "mathiasverraes/money",
@@ -62,16 +62,16 @@
         },
         {
             "name": "mestrona/aqbanking-php",
-            "version": "2.1.0",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Mestrona/aqbanking-php.git",
-                "reference": "07ad4babf59cd4e33a8781dec39bc7f02d8a17c7"
+                "reference": "78faac889cca80d978650a497d18065531ec0e59"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Mestrona/aqbanking-php/zipball/07ad4babf59cd4e33a8781dec39bc7f02d8a17c7",
-                "reference": "07ad4babf59cd4e33a8781dec39bc7f02d8a17c7",
+                "url": "https://api.github.com/repos/Mestrona/aqbanking-php/zipball/78faac889cca80d978650a497d18065531ec0e59",
+                "reference": "78faac889cca80d978650a497d18065531ec0e59",
                 "shasum": ""
             },
             "require": {
@@ -113,9 +113,9 @@
             "description": "A wrapper to use AqBanking CLI from a PHP context",
             "support": {
                 "issues": "https://github.com/Mestrona/aqbanking-php/issues",
-                "source": "https://github.com/Mestrona/aqbanking-php/tree/2.1.0"
+                "source": "https://github.com/Mestrona/aqbanking-php/tree/3.0.0"
             },
-            "time": "2023-05-05T15:28:17+00:00"
+            "time": "2023-05-11T17:57:36+00:00"
         }
     ],
     "packages-dev": [],
