@@ -3,7 +3,7 @@
     "description": "Download Banking Transactions and Write them to a Database",
     "type": "project",
     "require": {
-        "mestrona/aqbanking-php": "0.5.0"
+        "mestrona/aqbanking-php": "^4.0.0"
     },
     "autoload": {
         "psr-4": {
