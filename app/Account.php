@@ -52,7 +52,7 @@ class Account
         $this->pinFile = new PinFile($this->getStoragePath(), $this->user);
     }
 
-    public function fetchTransactions(DateTime $from = null)
+    public function fetchAll(DateTime $from = null)
     {
         $this->initializeAqBanking();
 
@@ -65,6 +65,12 @@ class Account
         $dom = $render->execute($contextFile);
         $result = new ContextXmlRenderer($dom);
 
+        return $result;
+    }
+
+    public function fetchTransactions(DateTime $from = null)
+    {
+        $result = $this->fetchAll($from);
         $transactions = $result->getTransactions();
 
         return $transactions;
@@ -140,7 +146,7 @@ class Account
      * @param Transaction[] $transactions
      * @return Transaction[]
      */
-    protected function keyTransactions(array $transactions)
+    public function keyTransactions(array $transactions)
     {
         $result = [];
         $dateCounters = array();
@@ -160,6 +166,15 @@ class Account
     public static function formatKey(string $date, int $increment)
     {
         return $date . sprintf('%05d', $increment);
+    }
+
+    public function getFinalBalance($balances)
+    {
+        usort($balances, function($a, $b) {
+            return - ($a->getDate() <=> $b->getDate());
+        });
+
+        return $balances[0]->getValue()->getAmount() / 100;
     }
 
 }

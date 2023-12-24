@@ -58,7 +58,7 @@ class BankTransactionTable extends Table
             call_user_func($this->hooks[self::HOOK_AFTER_SAVED], $saved);
         }
 
-        return count($saved);
+        return $saved;
     }
 
     public function getNewestTransactionDate($configCode = 'default')
