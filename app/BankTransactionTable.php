@@ -38,7 +38,7 @@ class BankTransactionTable extends Table
                 'local_account_number' => $aqTransaction->getLocalAccount()->getAccountNumber(),
                 'local_bank_code' => $aqTransaction->getLocalAccount()->getBankCode()->getString(),
                 'amount' => $aqTransaction->getValue()->getAmount() / 100,
-                'currency' => $aqTransaction->getValue()->getCurrency()->getName(),
+                'currency' => $aqTransaction->getValue()->getCurrency()->getCode(),
                 'purpose' => $aqTransaction->getPurpose(),
             ];
 
@@ -58,7 +58,7 @@ class BankTransactionTable extends Table
             call_user_func($this->hooks[self::HOOK_AFTER_SAVED], $saved);
         }
 
-        return count($saved);
+        return $saved;
     }
 
     public function getNewestTransactionDate($configCode = 'default')

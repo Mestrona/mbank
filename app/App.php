@@ -6,6 +6,7 @@ use DateTime;
 
 class App
 {
+    const HOOK_SUMMARY = 'summary';
     protected $accounts;
 
     public function __construct(array $accounts)
@@ -51,7 +52,7 @@ class App
 
         if ($newest == null) {
             $firstDay = new DateTime();
-            $firstDay->modify('-89 day');
+            $firstDay->modify('-21 day');
             echo 'Fetching all available transactions from the bank' . PHP_EOL;
         } else {
             $firstDay = clone $newest;
@@ -64,15 +65,25 @@ class App
 
         echo 'Fetching ...' . PHP_EOL;
 
-        $transactions = $account->fetchKeyedTransactions($firstDay);
+        $all = $account->fetchAll($firstDay);
+
+        $transactions = $account->keyTransactions($all->getTransactions());
 
         echo sprintf('Received %d transactions', count($transactions)) . PHP_EOL;
 
         echo 'Saving ...' . PHP_EOL;
 
-        $countNew = $table->insertTransactions($transactions, $configCode);
+        $savedTransactions = $table->insertTransactions($transactions, $configCode);
 
-        echo sprintf('Saved %d NEW transactions', $countNew) . PHP_EOL;
+        echo sprintf('Saved %d NEW transactions', count($savedTransactions)) . PHP_EOL;
+
+        $finalBalance = $account->getFinalBalance($all->getBalances());
+
+        echo sprintf('Final Balance: %s', $finalBalance);
+
+        if (isset($this->accounts[$configCode]['hooks'][self::HOOK_SUMMARY])) {
+            call_user_func($this->accounts[$configCode]['hooks'][self::HOOK_SUMMARY], $savedTransactions, $finalBalance);
+        }
     }
 
 
