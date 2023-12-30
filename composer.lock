@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "mestrona/aqbanking-php",
-            "version": "4.0.0",
+            "version": "4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Mestrona/aqbanking-php.git",
-                "reference": "61955fcd4a7323fa09d33881a110c9d0478717ee"
+                "reference": "5894955a864ed84d8d68fc574d38d0fb5cb0cbe2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Mestrona/aqbanking-php/zipball/61955fcd4a7323fa09d33881a110c9d0478717ee",
-                "reference": "61955fcd4a7323fa09d33881a110c9d0478717ee",
+                "url": "https://api.github.com/repos/Mestrona/aqbanking-php/zipball/5894955a864ed84d8d68fc574d38d0fb5cb0cbe2",
+                "reference": "5894955a864ed84d8d68fc574d38d0fb5cb0cbe2",
                 "shasum": ""
             },
             "require": {
@@ -63,9 +63,9 @@
             "description": "A wrapper to use AqBanking CLI from a PHP context",
             "support": {
                 "issues": "https://github.com/Mestrona/aqbanking-php/issues",
-                "source": "https://github.com/Mestrona/aqbanking-php/tree/4.0.0"
+                "source": "https://github.com/Mestrona/aqbanking-php/tree/4.0.1"
             },
-            "time": "2023-12-11T13:57:25+00:00"
+            "time": "2023-12-30T08:39:50+00:00"
         },
         {
             "name": "moneyphp/money",
@@ -164,5 +164,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.6.0"
 }
